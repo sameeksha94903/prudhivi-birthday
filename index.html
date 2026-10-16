@@ -260,7 +260,7 @@ function celebrate() {
 document.getElementById("musicFile").addEventListener("change", function() {
   if (this.files.length) {
     const music = document.getElementById("music");
-    music.src = ";voice.mp4";
+    music.src = "voice.mp4";
     music.play().catch(() => {});
   }
 });
