@@ -1,0 +1,269 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Prudhivi 💗</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  text-align: center;
+  font-family: Georgia, serif;
+  color: #813b5a;
+  background: linear-gradient(135deg, #fff5f8, #ffd9e7, #fff0f5);
+  overflow-x: hidden;
+}
+
+main { padding: 30px 16px 50px; }
+
+h1 {
+  font-size: clamp(32px, 8vw, 55px);
+  font-weight: normal;
+  color: #c04479;
+}
+
+.subtitle { line-height: 1.8; }
+
+.envelope {
+  width: 280px;
+  height: 180px;
+  max-width: 90%;
+  margin: 60px auto 25px;
+  position: relative;
+  background: #f4a9c4;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 12px 30px #c0447930;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ec91b3;
+  clip-path: polygon(0 0, 50% 60%, 100% 0);
+  transition: transform .7s;
+  transform-origin: top;
+  z-index: 3;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+.letter {
+  position: absolute;
+  background: #fffdfb;
+  width: 85%;
+  height: 145px;
+  left: 7.5%;
+  top: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform .8s;
+}
+
+.envelope.open .letter {
+  transform: translateY(-100px);
+}
+
+.seal {
+  position: absolute;
+  z-index: 4;
+  top: 45%;
+  left: 43%;
+  font-size: 35px;
+}
+
+#surprise { display: none; }
+#surprise.show { display: block; animation: fade .9s ease; }
+
+.card {
+  max-width: 680px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fffdfb;
+  border: 1px solid #f5bfd3;
+  border-radius: 22px;
+  box-shadow: 0 12px 35px #c0447920;
+}
+
+.card h2 { color: #c04479; font-size: 30px; }
+
+.message { line-height: 1.9; white-space: pre-line; }
+
+button {
+  border: none;
+  padding: 13px 23px;
+  margin: 8px;
+  border-radius: 30px;
+  color: white;
+  background: #c04479;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 650px;
+  margin: 25px auto;
+}
+
+.gallery img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 4px solid white;
+  background: #fbdce8;
+}
+
+#extra { display: none; font-size: 20px; }
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  pointer-events: none;
+  animation: float 5s linear forwards;
+  z-index: 10;
+}
+
+@keyframes float {
+  to { transform: translateY(-110vh) rotate(30deg); opacity: 0; }
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 450px) {
+  .gallery img { height: 170px; }
+  .card { padding: 20px; }
+}
+</style>
+</head>
+
+<body>
+<main>
+  <p>♡ A LITTLE SURPRISE MADE JUST FOR YOU ♡</p>
+
+  <h1>Hey, Prudhivi! 💗</h1>
+  <p class="subtitle">
+    Someone special has a little message waiting for you.<br>
+    Ready to open your surprise?
+  </p>
+
+  <div class="envelope" id="envelope" role="button" tabindex="0"
+       aria-label="Open your birthday surprise">
+    <div class="letter">
+      <span style="font-size:35px">💌</span>
+      <span>A little note for you</span>
+    </div>
+    <span class="seal">♥</span>
+  </div>
+
+  <p id="hint">Tap the envelope to open it ♡</p>
+
+  <section id="surprise">
+    <div class="card">
+      <div style="font-size:45px">🎂 🎈 ✨</div>
+      <h2>Happy Birthday, Prudhivi! 💗</h2>
+
+      <p class="message">Today is all about you! 🌷
+
+Wishing you a birthday filled with happiness, laughter, beautiful memories, and lovely surprises.
+
+May your dreams come closer, your days become brighter, and may you always find reasons to smile.
+
+You deserve so many wonderful things in life. Keep being the amazing person you are.
+
+Happy Birthday once again, Prudhivi! 🎂💗</p>
+
+      <button onclick="celebrate()">One more surprise 💞</button>
+      <p id="extra">You deserve all the happiness in the world! 💗✨</p>
+
+    <div class="card">
+      <h2>A Little Music 🎶</h2>
+      <p>Choose a music file on your laptop to play your favourite song.</p>
+      <input type="file" id="musicFile" accept="audio/*">
+      <br>
+      <audio id="music" controls loop style="width:100%; margin-top:15px"></audio>
+    </div>
+  </section>
+
+  <p style="margin-top:35px">Made with love and warm wishes ♡</p>
+</main>
+
+<script>
+const envelope = document.getElementById("envelope");
+let opened = false;
+
+function openLetter() {
+  if (opened) return;
+  opened = true;
+
+  envelope.classList.add("open");
+  document.getElementById("hint").textContent =
+    "Your birthday surprise is opening... 💗";
+
+  setTimeout(function() {
+    document.getElementById("surprise").classList.add("show");
+    document.getElementById("surprise").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+    hearts();
+  }, 800);
+}
+
+envelope.addEventListener("click", openLetter);
+
+envelope.addEventListener("keydown", function(e) {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    openLetter();
+  }
+});
+
+function hearts() {
+  for (let i = 0; i < 25; i++) {
+    setTimeout(function() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = ["💗", "♡", "💕", "✨", "🎉"][
+        Math.floor(Math.random() * 5)
+      ];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (18 + Math.random() * 20) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5500);
+    }, i * 120);
+  }
+}
+
+function celebrate() {
+  document.getElementById("extra").style.display = "block";
+  hearts();
+}
+
+document.getElementById("musicFile").addEventListener("change", function() {
+  if (this.files.length) {
+    const music = document.getElementById("music");
+    music.src = URL.createObjectURL(this.files[0]);
+    music.play().catch(() => {});
+  }
+});
+</script>
+</body>
+</html>
